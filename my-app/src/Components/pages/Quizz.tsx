@@ -21,6 +21,9 @@ const Physics: React.FC = () => {
 
   const [progress, setProgress] = useState(100);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   //progress bar
   useEffect(() => {
     const timer = setInterval(() => {
@@ -35,8 +38,19 @@ const Physics: React.FC = () => {
     return () => clearInterval(timer);
   }, [progress]); // Restart the timer when the current question changes\
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  //Progress Bar used in program
+  const progressBar = useMemo(() => {
+    return (
+      <div className="w-[600px] rounded-xl border-black border-2">
+        <div
+          className={`bg-red-500 h-5 rounded-xl transition-all duration-500  ease-in-out `}
+          style={{
+            width: `${progress}%`,
+          }}
+        />
+      </div>
+    );
+  }, [progress]);
 
   //Next button
   const next = () => {
@@ -46,7 +60,6 @@ const Physics: React.FC = () => {
     //storing all the info needed
     const answer = checkAnswer ? selectedAnswer : "null"; //all the selected aswers
     const question = currentQuestion.question; //saving questions
-    // const validity = questions[currentIndex].a.check; //Checking validity
     const questionId = currentQuestion.id; //questions id
     let correctAnswers = "";
 
@@ -90,19 +103,6 @@ const Physics: React.FC = () => {
       console.log("i ma  false");
     }
   };
-
-  const progressBar = useMemo(() => {
-    return (
-      <div className="w-[600px] rounded-xl border-black border-2">
-        <div
-          className={`bg-red-500 h-5 rounded-xl transition-width duration-300 ease-in-out `}
-          style={{
-            width: `${progress}%`,
-          }}
-        />
-      </div>
-    );
-  }, [progress]);
 
   return (
     <div className="h-[100vh] bg-blue-400">
@@ -204,8 +204,13 @@ const Physics: React.FC = () => {
             ))}
           </ul>
           <button
+            disabled={!checkAnswer}
             onClick={next}
-            className="h-11 bottom-0 duration-500 ease-in-out left-0 absolute w-full rounded-b-2xl hover:bg-black hover:text-white text-white font-bold bg-blue-600  "
+            className={`h-11 bottom-0 duration-500 ease-in-out left-0 absolute w-full ${
+              checkAnswer == false
+                ? "cursor-not-allowed hover:bg-gray-500 "
+                : "cursor-pointer hover:bg-black"
+            } rounded-b-2xl  hover:text-white text-white font-bold bg-blue-600`}
           >
             Next
           </button>
