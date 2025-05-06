@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./Components/pages/Login";
 import Home from "./Components/pages/Home";
 import Result from "./Components/pages/Result";
-import Physics from "./Components/pages/Physics";
+import Quizz from "./Components/pages/Quizz";
 import Chemistry from "./Components/pages/Chemistry";
 
 const AppRouter: React.FC = () => {
@@ -12,8 +12,7 @@ const AppRouter: React.FC = () => {
       <Route path="/" element={<Login />} />
       <Route path="/Home" element={<Home />} />
       <Route path="/Result" element={<Result />} />
-      <Route path="/PhysicsQuizz" element={<Physics />} />
-      <Route path="/ChemistryQuizz" element={<Chemistry />} />
+      <Route path="/Quizz/:subject" element={<Quizz />} />
     </Routes>
   );
 };
